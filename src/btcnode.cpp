@@ -116,6 +116,8 @@ void postcmd(struct btc_node_ *node, btc_p2p_msg_hdr *hdr, struct const_buffer *
         else {
             printf("BLOCK NOT FOUND %s\n", blockhash.GetHex().c_str());
         }
+#if 0
+        //uint64_t s = GetTimeMillis();
         for (unsigned int i = 0; i < vsize; i++)
         {
             btc_tx *tx = btc_tx_new(); //needs to be on the heep
@@ -131,6 +133,7 @@ void postcmd(struct btc_node_ *node, btc_p2p_msg_hdr *hdr, struct const_buffer *
             pnode->processTXID(blockhash, txhash);
             btc_tx_free(tx);
         }
+#endif
         if (!pnode->bestblock || pnode->bestblock->m_height < it->second->m_height) {
             pnode->bestblock = it->second;
             printf("Bestblock at height %s %d\n", pnode->bestblock->m_hash.GetHex().c_str(), pnode->bestblock->m_height );
