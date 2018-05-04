@@ -65,7 +65,7 @@ void request_blocks(btc_node *node)
     cstring* inv_msg_cstr = cstr_new_sz(2000*(4+32));
     int cnt = 0;
     for (HeaderEntry* header : pnode->m_headers) {
-        if (header->isRequested()) {
+        if (header->isRequested() || header->m_height < 490000 || header->m_height > 500000) {
             continue;
         }
         printf("Request block at height: %d\n", header->m_height);
@@ -137,6 +137,9 @@ void postcmd(struct btc_node_ *node, btc_p2p_msg_hdr *hdr, struct const_buffer *
         if (!pnode->bestblock || pnode->bestblock->m_height < it->second->m_height) {
             pnode->bestblock = it->second;
             printf("Bestblock at height %s %d\n", pnode->bestblock->m_hash.GetHex().c_str(), pnode->bestblock->m_height );
+            if (pnode->bestblock->m_height == 500000) {
+                exit(0);
+            }
         }
         //printf("Process block %lld\n", GetTimeMillis()-s);
         //s = GetTimeMillis();
