@@ -6,9 +6,11 @@
 
 #include <univalue.h>
 
+#if 0
 #include <lmdb.h>
 
 #include <db_lmdb.h>
+#endif
 #include <db_leveldb.h>
 #include <btcnode.h>
 
@@ -22,9 +24,11 @@ int main(int argc, char* argv[])
     if (g_args.GetArg("-database", DEFAULT_DB) == "leveldb") {
         db = new DatabaseLEVELDB(GetDataDir()+"/db_leveldb");
     }
+#if 0
     else if (g_args.GetArg("-database", DEFAULT_DB) == "lmdb") {
         db = new DatabaseLMDB(GetDataDir()+"/db_lmdb");
     }
+#endif
     else {
         LogPrintf("Database not supported");
         exit(1);
