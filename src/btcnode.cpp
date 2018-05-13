@@ -68,7 +68,7 @@ void request_blocks(btc_node *node)
         if (header->isRequested() || header->m_height < 490000 || header->m_height > 500000) {
             continue;
         }
-        printf("Request block at height: %d\n", header->m_height);
+        //printf("Request block at height: %d\n", header->m_height);
         ser_u32(inv_msg_cstr, MSG_WITNESS_BLOCK);
         ser_bytes(inv_msg_cstr, header->m_hash.m_data, BTC_HASH_LENGTH);
         pnode->m_blocks_in_flight[header->m_hash] = header;
@@ -136,7 +136,8 @@ void postcmd(struct btc_node_ *node, btc_p2p_msg_hdr *hdr, struct const_buffer *
 #endif
         if (!pnode->bestblock || pnode->bestblock->m_height < it->second->m_height) {
             pnode->bestblock = it->second;
-            printf("Bestblock at height %s %d\n", pnode->bestblock->m_hash.GetHex().c_str(), pnode->bestblock->m_height );
+            if ((pnode->bestblock->m_height % 100)==0)
+                printf("Bestblock at height %s %d\n", pnode->bestblock->m_hash.GetHex().c_str(), pnode->bestblock->m_height );
             if (pnode->bestblock->m_height == 500000) {
                 exit(0);
             }
